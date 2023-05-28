@@ -1,2 +1,2 @@
 # kumologica-contrib-graphqlclient
-This repo holds the source code for GraphQL client
+This repo  holds the source code for GraphQL client
