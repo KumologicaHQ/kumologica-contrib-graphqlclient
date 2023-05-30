@@ -1,0 +1,151 @@
+<script type="text/javascript">
+  App.nodes.registerType('Graphql', {
+    category: 'web',
+    color: '#e834ac',
+    defaults: {
+      name: { value: 'Graphql', required: true },
+      template: { value: 'Provide your GraphQL payload!' , required: true},
+      url: { value: '', templateable: true, required: true },
+      token: { value: '', required: false, password: true }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'kumo_graphql.png',
+    label: function () {
+      return this.name || 'Graphql';
+    },
+    oneditprepare: function() {
+      var that = this;
+
+      $('#node-input-field').typedInput({
+        default: 'camsg',
+        types: ['camsg', 'cavars'],
+        typeField: $('#node-input-fieldType')
+      });
+
+      editor = ace.edit("editor");
+      editor.resize();
+      // Set content to the editor
+      let code = $('#node-input-template').val()
+      editor.session.setValue(code);
+
+      $('#editor-fontsize-minus').click(e => {
+        let currentFontSize = editor.getFontSize();
+        currentFontSize = currentFontSize - 1;
+        editor.setFontSize(currentFontSize);
+      });
+
+      $('#editor-fontsize-plus').click(e => {
+        let currentFontSize = editor.getFontSize();
+        currentFontSize = currentFontSize + 1;
+        editor.setFontSize(currentFontSize);
+      });
+    },
+    oneditsave: function() {
+      $('#node-input-template').val(editor.getValue());
+    },
+    oneditcancel: function() {
+      editor.destroy();
+    },
+    oneditresize: function(size) {
+      var rows = $('#dialog-form>div:not(.node-text-editor-row)');
+      var height = $('#dialog-form').height();
+      for (var i = 0; i < rows.size(); i++) {
+        height -= $(rows[i]).outerHeight(true);
+      }
+      var editorRow = $('#dialog-form>div.node-text-editor-row');
+      height -=
+        parseInt(editorRow.css('marginTop')) +
+        parseInt(editorRow.css('marginBottom'));
+      let editor = $('.node-text-editor');
+      editor.css('height', height + 'px');
+    }
+  });
+</script>
+
+<script type="text/x-kumologica" data-template-name="Graphql">
+  <style scoped>
+    .ace_editor {
+      height:95%;
+    }
+  </style>
+
+    <div class="kumo-window">
+
+      <!-- Display name -->
+      <div class="kumo-section">
+        <div class="kumo-row">
+            <label class="kumo-row-label" for="node-input-name">Display Name</label>
+            <input class="kumo-row-editable" type="text" id="node-input-name" placeholder="Node Name">
+        </div>
+      </div>
+
+      <!-- General section -->
+      <div class="kumo-section-title">General</div>
+        <div class="kumo-section">
+
+          <div id="AttrHolder">
+          <div class="kumo-row" id='url'>
+            <div class="kumo-row-with-margin" >
+              <label class="kumo-row-label" for="node-input-url">URL</label>
+              <input class="kumo-row-editable" type="text" id="node-input-url" placeholder="GraphQL URL endpoint">
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="node-input-template" style="width: 50%"><span>Payload</span></label>
+            <div id="fn-controls" style="display: flex; justify-content: flex-end; width: 100%;margin-top: -15px">
+              <button id="editor-fontsize-minus" class="editor-button editor-button-small" style="margin-right: 2px;">
+                <i class="fa fa-font" /><i class="fa fa-minus" style="font-size:6px" />
+              </button>
+              
+              <button id="editor-fontsize-plus" class="editor-button editor-button-small">
+                <i class="fa fa-font"/><i class="fa fa-plus" style="font-size:6px" />
+              </button>
+            </div>
+            <input type="hidden" id="node-input-template" autofocus="autofocus">
+        </div>
+          <div class="form-row node-text-editor-row" style="margin-top: 3px; height: 400px">
+            <input type="hidden" id="node-input-template"/>
+            <textarea id="editor" style="width: 100%"></textarea>
+          </div>
+          </div>
+      <div class="kumo-section-title">Security</div>
+          <div class="kumo-section"> 
+
+      </div>
+      <div class="kumo-row" id='token'>
+        <div class="kumo-row-with-margin" >
+          <label class="kumo-row-label" for="node-input-token">Token</label>
+          <input class="kumo-row-editable" type="text" id="node-input-token" placeholder="Authentication token for the service endpoint">
+        </div>
+      </div>
+      </div>
+
+</script>
+
+<script type="text/x-kumologica" data-help-name="Graphql">
+  <h4> Description </h4>
+  <p>GraphQL node is the client node that sends GraphQL query or mutation request to a service endpoint.
+  </p>
+
+   <h4> Properties </h4>
+   <ul>
+   <li><i>Url</i> - (Required). Endpoint hosting the GraphQL service.</li>
+   <li><i>Payload</i> - (Required). GraphQL query or mutation that you need to send to the serivce endpoint. You can pass arguments from your <code>msg</code> or <code>vars</code> property using the notation : <code>{{}}</code>. eg: A property under <code>msg.data.country</code> can be access as <code>{{data.country}}</code>. You don't need to refer <code>msg.</code> in the notation. Similarly for payload and vars.</li>
+   <li><i>Token</i> - (Optional). Token provided by GraphQL endpoint for authentication.</li>
+   </ul>
+
+   <h4> Requirements </h4>
+   512Mb is the minimum memory requirement for AWS Lambda deployments.
+
+   <h4> Throws </h4>
+   <ul>
+     <li>GraphqlclientError: Graphql client Failed'</li>
+   </ul>
+
+   <h4> Returns </h4>
+   The node returns the response under <code>msg.payload</code>.
+
+   <h4> More info </h4>
+   <a href="http://kumologica.com/">Kumologica Documentation</a>
+</script>

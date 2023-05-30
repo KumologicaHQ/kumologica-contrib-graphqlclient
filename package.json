@@ -1,0 +1,28 @@
+{
+  "name": "@kumologica/kumologica-contrib-graphqlclient",
+  "version": "0.0.1",
+  "description": "Kumologica client node that sends request to a grahql endpoint.",
+  "author": "kumologica",
+  "main": "lib/Graphqlclient.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KumologicaHQ/kumologica-contrib-graphqlclient.git"
+  },
+  "license": "Copyright",
+  "keywords": [
+    "kumologica",
+    "web",
+    "graphql"
+  ],
+  "scripts": {
+    "pub": "npm publish --access public"
+  },
+  "dependencies": {
+    "@kumologica/devkit": "latest"
+  },
+  "kumologica": {
+    "nodes": {
+      "twilio": "lib/Graphqlclient.js"
+    }
+  }
+}
