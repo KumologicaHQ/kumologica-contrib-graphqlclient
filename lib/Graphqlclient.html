@@ -137,6 +137,10 @@
 
    <h4> Requirements </h4>
    512Mb is the minimum memory requirement for AWS Lambda deployments.
+   
+   <h4> Note </h4>
+   If you want to send custom headers to your graphql endpoint use the following object structure: <code>msg.graphql.headers['yourheaderheere']</code>. When custom headers
+   are used the default content type (application\json) and Authorization header are not honourned.
 
    <h4> Throws </h4>
    <ul>
