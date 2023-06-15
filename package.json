@@ -1,6 +1,6 @@
 {
   "name": "@kumologica/kumologica-contrib-graphqlclient",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Kumologica client node that sends request to a grahql endpoint.",
   "author": "kumologica",
   "main": "lib/Graphqlclient.js",
@@ -18,7 +18,8 @@
     "pub": "npm publish --access public"
   },
   "dependencies": {
-    "@kumologica/devkit": "latest"
+    "@kumologica/devkit": "latest",
+    "mustache": "^4.2.0"
   },
   "kumologica": {
     "nodes": {
